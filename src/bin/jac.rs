@@ -3,6 +3,23 @@ use colored::Colorize;
 use std::io;
 
 
+fn print_colored_coffee() {
+    const ASCII : &str = include_str!("../../coffee");
+    for line in ASCII.lines() {
+        for c in line.chars() {
+            let colored_char = match c {
+                '▓' => c.to_string().truecolor(111, 78, 55),
+                '▒' => c.to_string().truecolor(255, 255, 255),
+                '░' => c.to_string().truecolor(200, 200, 200),
+                '\0'..='\u{1f}' | '!'..='\u{d7ff}' | '\u{e000}'..='\u{10ffff}' => c.to_string().into(),
+                ' ' => c.to_string().into(),
+            };
+            print!("{}", colored_char);
+        }
+        println!();
+    }
+}
+
 fn print_coffee(gm: bool) {
     const ASCII : &str = include_str!("../../coffee");
     if !(gm) {
@@ -35,6 +52,8 @@ fn show_details() {
     details += "-n      --no            :   Skip the question by auto-responding \"no\"\n";
     // --graduate_multicolor
     details += "--graduate-multicolor   :   Color the ascii output based on the position (x, y) of the pixel\n";
+    // -c 
+    details += "-c      --colored       :   Color the cup and the coffee. May not work on all device, colorisation follow rules ( see readme ).\n";
     // -h
     details += "-h      --help  :   Show arguments and usage of the command"; 
 
@@ -44,10 +63,17 @@ fn show_details() {
 fn main() -> Result<(), Box<dyn std::error::Error>>{
     let mut buffer = String::new();
     let args: Args = Args::parse();
-    println!("{:?}", args);
+
+    // Debug tool
+    if args.debug {
+        println!("{:?}", args);
+    }
 
     if args.help{
         show_details();
+    }
+    else if args.colored {
+        print_colored_coffee();
     }
     else if !(args.question) && !(args.no) {
         print_coffee(args.graduate_multicolor);
@@ -92,10 +118,17 @@ struct Args {
 
     #[arg(short, long)]
     yes : bool,
+
+    #[arg(short, long)]
+    graduate_multicolor : bool,
+
+    #[arg(short, long)]
+    colored : bool,
+
+    #[arg(short, long)]
+    debug : bool,
     
     #[arg(short, long)]
     help : bool,
 
-    #[arg(short, long)]
-    graduate_multicolor : bool,
 }

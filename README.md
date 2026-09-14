@@ -32,6 +32,10 @@ To use it, simply use `jac` on your terminal and a coffee cup will be printed on
 
 > **-y** : Ask the question and automatically answer yes to it, showing the coffee cup.
 
+> **-c** : Color the cup and the coffee. Colors can be change in script, and it match the ASCII caracter ( *▓: Coffee, ▒: Bright cup, ░: Dark cup* )
+
+> **-d** : Show debug info ( *such as variable state...* )
+
 > **-h** : Show an usage of the command, and print in your CMD this help page.
 
 - These options are available in long format, respectively:
@@ -40,6 +44,12 @@ To use it, simply use `jac` on your terminal and a coffee cup will be printed on
 > **--no**
 
 > **--yes**
+
+> **--colored**
+
+> **--debug**
+
+> **--graduate-colorated** : Color the cup following x/y position of the pixel
 
 > **--help**
 
