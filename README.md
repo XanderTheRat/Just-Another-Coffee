@@ -27,14 +27,20 @@ Enjoy your coffee.
 # Usage
 To use it, simply use `jac` on your terminal and a coffee cup will be printed on your screen. It exist different option arguments that can be passed :
 > **-q** : This argument question the user about their willing of a coffee cup. If answered no, it will show `"No more cup"`.
+
 > **-n** : Answer automatically no to the question, even if **-q** is not provided.
+
 > **-y** : Ask the question and automatically answer yes to it, showing the coffee cup.
+
 > **-h** : Show an usage of the command, and print in your CMD this help page.
 
 - These options are available in long format, respectively:
 > **--question**
+
 > **--no**
+
 > **--yes**
+
 > **--help**
 
 
