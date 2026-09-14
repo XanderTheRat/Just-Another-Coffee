@@ -8,6 +8,7 @@ fn print_coffee(gm: bool) {
     if !(gm) {
         println!("{}", ASCII);
     } else {
+        // Doesn\'t need modification if you edit the ascii art.
         for (y, line) in ASCII.lines().enumerate() {
             for (x, c) in line.chars().enumerate() {
                 let r = (x.saturating_mul(4) % 255) as u8;
