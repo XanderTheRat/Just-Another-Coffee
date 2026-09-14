@@ -77,5 +77,6 @@ By default, the printed coffee is the following.
            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░           
                   ▒▒▒▒░▒░░░░▒▒▒▒▒▒▒
 ```
-You can change it at any time by editing `coffee` file and puting your ascii cup in it. Color is not yet implemented.
+You can change it at any time by editing `coffee` file and puting your ascii cup in it.
 Any ascii format is tolerated as long as it can be printed in your terminal.
+To change the color, edit the print_colored_coffee function in lib.rs file.
