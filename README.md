@@ -28,7 +28,7 @@ If you doesn't want to update the executable with the previous command with ever
 git config core.hooksPath .githooks
 ```
 
-This use a hooks that will automatically 
+This use a hooks that should automatically update the executable.
 
 Enjoy your coffee.
 
