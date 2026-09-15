@@ -22,13 +22,7 @@ You can move the binary file to `/usr/local/bin` to execute it from any reposito
 cargo install --path .
 ```
 
-If you doesn't want to update the executable with the previous command with every pull, execute this one once :
-
-```
-git config core.hooksPath .githooks
-```
-
-This use a hooks that should automatically update the executable.
+You'll have to execute the previous command manually with every pull, but I ( xandertherat ) am actually searching for a solution.
 
 Enjoy your coffee.
 
