@@ -1,28 +1,9 @@
 use clap::Parser;
-use colored::Colorize;
 use std::io;
 
-use jac::print_colored_coffee;
-
-
-fn print_coffee(gm: bool) {
-    const ASCII : &str = include_str!("../../coffee");
-    if !(gm) {
-        println!("{}", ASCII);
-    } else {
-        // Doesn\'t need modification if you edit the ascii art.
-        for (y, line) in ASCII.lines().enumerate() {
-            for (x, c) in line.chars().enumerate() {
-                let r = (x.saturating_mul(4) % 255) as u8;
-                let g = (y.saturating_mul(12) % 255) as u8;
-                let b = 150; 
-
-                print!("{}", c.to_string().truecolor(r, g, b));
-            }
-            println!();
-        }
-    }
-}
+use jac::asset::front::print_coffee;
+use jac::asset::front::print_colored_coffee;
+use jac::asset::structures::Args;
 
 fn show_details() {
     let mut details: String = String::new();
@@ -88,32 +69,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
     
 
     Ok(())
-
-}
-
-
-#[derive(Parser, Debug)]
-#[command(disable_help_flag = true)]
-struct Args {
-    #[arg(short, long)]
-    question: bool,
-
-    #[arg(short, long)]
-    no : bool,
-
-    #[arg(short, long)]
-    yes : bool,
-
-    #[arg(short, long)]
-    graduate_multicolor : bool,
-
-    #[arg(short, long)]
-    colored : bool,
-
-    #[arg(short, long)]
-    debug : bool,
-    
-    #[arg(short, long)]
-    help : bool,
 
 }
