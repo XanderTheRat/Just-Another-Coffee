@@ -26,18 +26,19 @@ pub struct Args {
 
     #[arg(short, long)]
     pub help: bool,
+
+    #[arg(long)]
+    pub ascii_convert: bool,
 }
 
 pub struct AsciiConverter {
     ascii_ramp: Vec<char>,
-    block_ramp: Vec<char>,
 }
 
 impl AsciiConverter {
     pub fn new() -> Self {
         Self {
-            ascii_ramp: vec![' ', '.', ':', '-', '=', '+', '*', '#', '%', '@'],
-            block_ramp: vec![' ', '░', '▒', '▓', '█'],
+            ascii_ramp: vec![' ', '░', '▒', '▓', '█'],
         }
     }
     // TODO Xander : Refacto to respect SRP.

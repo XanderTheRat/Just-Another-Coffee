@@ -1,9 +1,11 @@
 use clap::Parser;
+use image::DynamicImage;
 use std::io;
 
 use jac::asset::front::print_coffee;
 use jac::asset::front::print_colored_coffee;
 use jac::asset::structures::Args;
+use jac::asset::structures::AsciiConverter;
 
 fn show_details() {
     let mut details: String = String::new();
@@ -38,6 +40,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     if args.help {
         show_details();
+    } else if args.ascii_convert {
+        let ascii_converter = AsciiConverter::new();
+        let mut buffer = String::new();
+        let stdin = io::stdin();
+        println!("Enter the image URL:");
+        stdin.read_line(&mut buffer)?;
+        let image = buffer.trim();
+
+        let image_fetched = match AsciiConverter::fetch_image(image) {
+            Ok(image) => image,
+            Err(e) => {
+                eprintln!("Error fetching image: {}", e);
+                return Ok(());
+            }
+        };
+        let ascii_output = ascii_converter.image_to_ascii(&image_fetched, 60);
+        println!("{}", ascii_output);
     } else if args.colored {
         print_colored_coffee();
     } else if !(args.question) && !(args.no) {
