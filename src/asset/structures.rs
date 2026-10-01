@@ -1,5 +1,7 @@
 use clap::Parser;
 use image::{DynamicImage, GenericImageView, imageops::FilterType};
+use reqwest::blocking::get;
+use std::error::Error;
 
 #[derive(Parser, Debug)]
 #[command(disable_help_flag = true)]
@@ -38,6 +40,7 @@ impl AsciiConverter {
             block_ramp: vec![' ', '░', '▒', '▓', '█'],
         }
     }
+    // TODO Xander : Refacto to respect SRP.
 
     /// In your terminal, a character is twice wide than it is tall.
     /// We have to resize all character to adapt the size of it is displayed in the terminal.
@@ -80,5 +83,16 @@ impl AsciiConverter {
         }
 
         output
+    }
+
+    pub fn fetch_image(source: &str) -> Result<DynamicImage, Box<dyn Error>> {
+        if source.starts_with("http://") || source.starts_with("https://") {
+            let bytes = get(source)?.bytes()?;
+            let img = image::load_from_memory(&bytes)?;
+            Ok(img)
+        } else {
+            let img = image::open(source)?;
+            Ok(img)
+        }
     }
 }
