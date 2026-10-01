@@ -41,6 +41,7 @@ impl AsciiConverter {
 
     /// In your terminal, a character is twice wide than it is tall.
     /// We have to resize all character to adapt the size of it is displayed in the terminal.
+    /// This function resizes the image to fit the terminal width.
     fn resize_for_terminal(img: &DynamicImage, target_width: u32) -> DynamicImage {
         let half = 0.5;
         let (orig_w, orig_h) = img.dimensions();
@@ -50,11 +51,33 @@ impl AsciiConverter {
         img.resize_exact(target_width, target_height.max(1), FilterType::Lanczos3)
     }
     fn luminance(r: u8, g: u8, b: u8) -> u8 {
-        (0.299 * r as f32 + 0.587 * g as f32 + 0.114 * b as f32) as u8
+        let red: f32 = r as f32;
+        let green: f32 = g as f32;
+        let blue: f32 = b as f32;
+
+        let luminance: u8 = (0.299 * red + 0.587 * green + 0.114 * blue) as u8;
+
+        return luminance;
     }
 
     fn luma_to_char(luma: u8, ramp: &[char]) -> char {
         let index = (luma as usize * (ramp.len() - 1)) / 255;
         ramp[index]
     }
+
+    pub fn image_to_ascii(img: &DynamicImage, target_width: u32) -> String {
+            let resized = resize_for_terminal(img, target_width);
+            let mut output = String::new();
+
+            for y in 0..resized.height() {
+                for x in 0..resized.width() {
+                    let pixel = resized.get_pixel(x, y);
+                    let luma = luminance(pixel[0], pixel[1], pixel[2]);
+                    let ch = luma_to_char(luma, BLOCK_RAMP);
+                    output.push(ch);
+                }
+                output.push('\n');
+            }
+
+            outpu
 }
