@@ -60,24 +60,25 @@ impl AsciiConverter {
         return luminance;
     }
 
-    fn luma_to_char(luma: u8, ramp: &[char]) -> char {
-        let index = (luma as usize * (ramp.len() - 1)) / 255;
-        ramp[index]
+    fn luma_to_char(&self, luma: u8) -> char {
+        let index = (luma as usize * (self.ascii_ramp.len() - 1)) / 255;
+        self.ascii_ramp[index]
     }
 
-    pub fn image_to_ascii(img: &DynamicImage, target_width: u32) -> String {
-            let resized = resize_for_terminal(img, target_width);
-            let mut output = String::new();
+    pub fn image_to_ascii(&self, img: &DynamicImage, target_width: u32) -> String {
+        let resized = Self::resize_for_terminal(img, target_width);
+        let mut output = String::new();
 
-            for y in 0..resized.height() {
-                for x in 0..resized.width() {
-                    let pixel = resized.get_pixel(x, y);
-                    let luma = luminance(pixel[0], pixel[1], pixel[2]);
-                    let ch = luma_to_char(luma, BLOCK_RAMP);
-                    output.push(ch);
-                }
-                output.push('\n');
+        for y in 0..resized.height() {
+            for x in 0..resized.width() {
+                let pixel = resized.get_pixel(x, y);
+                let luma = Self::luminance(pixel[0], pixel[1], pixel[2]);
+                let ch = self.luma_to_char(luma);
+                output.push(ch);
             }
+            output.push('\n');
+        }
 
-            outpu
+        output
+    }
 }
